@@ -70,26 +70,34 @@ class _CarSearchPageState extends State<CarSearchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ==================== SEARCH BAR ====================
+// ==================== SEARCH BAR WITH BLUE BACKGROUND ====================
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
+                  color: const Color(0xFF4E7C96), // Warna biru seperti gambar
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                child: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      searchText = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Cari mobil",
-                    prefixIcon: Icon(Icons.search),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        searchText = value;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Cari nama mobil...",
+                      prefixIcon: Icon(Icons.search),
+                    ),
                   ),
                 ),
               ),
+
 
               const SizedBox(height: 16),
 

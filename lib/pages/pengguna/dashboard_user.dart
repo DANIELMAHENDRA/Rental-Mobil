@@ -3,6 +3,8 @@ import '../../theme/colors.dart';
 import '../../models/user_model.dart';
 import 'package:project_rental_mobil/pages/pengguna/detail_mobil_page.dart';
 import 'package:project_rental_mobil/pages/pengguna/car_search_page.dart';
+import 'package:project_rental_mobil/pages/pengguna/riwayat_sewa_page.dart';
+
 
 // Model mobil
 class CarModel {
@@ -425,8 +427,8 @@ Widget _bottomNav(BuildContext context) {
 
         _navItem(
           context,
-          Icons.search,
-          "Pencarian",
+          Icons.notifications,
+          "Notifikasi",
           onTap: () {
             Navigator.push(
               context,
@@ -440,7 +442,10 @@ Widget _bottomNav(BuildContext context) {
           Icons.access_time,
           "Riwayat",
           onTap: () {
-            // Nanti bisa diarahkan ke halaman riwayat
+             Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const RiwayatSewaPage()),
+             );
           },
         ),
 

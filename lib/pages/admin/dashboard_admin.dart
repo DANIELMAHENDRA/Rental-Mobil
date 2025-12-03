@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../theme/colors.dart'; // Import AppColors
 import '../../models/user_model.dart'; // <<< WAJIB DIIMPORT UNTUK MENGGUNAKAN TIPE USERMODEL
+import 'detail_mobil_page.dart';
 
 // Model data tiruan untuk menampilkan daftar mobil
 class PeminjamanStatus {
   final String namaMobil;
   final String nomorPolisi;
   final String namaPenyewa;
-  final bool isAvailable; // Menunjukkan status (kuning untuk status)
+  final bool isAvailable;
   final String imageUrl;
 
   PeminjamanStatus({
@@ -26,28 +27,36 @@ final List<PeminjamanStatus> mockData = [
     nomorPolisi: "B 1234 XY",
     namaPenyewa: "Rangga Saputra",
     isAvailable: true,
-    imageUrl: 'https://placehold.co/100x70/333/FFF?text=Mobil', // Placeholder Image
+    imageUrl: 'assets/image/Avanza1.jpg',
   ),
   PeminjamanStatus(
-    namaMobil: "AVANZA",
+    namaMobil: "EXPANDER",
     nomorPolisi: "D 5678 ZI",
     namaPenyewa: "Siti Rahmawati",
     isAvailable: false,
-    imageUrl: 'https://placehold.co/100x70/333/FFF?text=Mobil', // Placeholder Image
+    imageUrl: 'assets/image/expander.jpeg', 
   ),
   PeminjamanStatus(
-    namaMobil: "AVANZA",
+    namaMobil: "HYUNDAI",
     nomorPolisi: "B 9012 AA",
     namaPenyewa: "Andi Wijaya",
     isAvailable: true,
-    imageUrl: 'https://placehold.co/100x70/333/FFF?text=Mobil', // Placeholder Image
+    imageUrl: 'assets/image/hyundai.jpeg', 
   ),
   PeminjamanStatus(
-    namaMobil: "AVANZA",
+    namaMobil: "PAJERO",
     nomorPolisi: "B 3456 BC",
     namaPenyewa: "Budi Santoso",
     isAvailable: false,
-    imageUrl: 'https://placehold.co/100x70/333/FFF?text=Mobil', // Placeholder Image
+    imageUrl: 'assets/image/Pajero.jpeg', 
+  ),
+
+    PeminjamanStatus(
+    namaMobil: "Rush",
+    nomorPolisi: "B 9008 BC",
+    namaPenyewa: "Daniel",
+    isAvailable: false,
+    imageUrl: 'assets/image/Rush.jpeg', 
   ),
 ];
 
@@ -61,7 +70,6 @@ final List<Map<String, dynamic>> adminMenu = [
 
 
 class DashboardAdmin extends StatelessWidget {
-  // 1. TAMBAHKAN FIELD USER
   final UserModel user;
 
   // 2. PERBAIKI KONSTRUKTOR UNTUK MEMINTA USER
@@ -233,54 +241,81 @@ class DashboardAdmin extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Gambar Mobil
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  data.imageUrl,
-                  width: 100,
-                  height: 70,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 100,
-                      height: 70,
-                      color: Colors.grey[300],
-                      alignment: Alignment.center,
-                      child: Text("IMG", style: TextStyle(color: Colors.grey[600])),
-                    );
-                  },
+Row(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    // Gambar Mobil
+    ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Image.asset(
+        data.imageUrl,
+        width: 100,
+        height: 70,
+        fit: BoxFit.cover,
+      ),
+    ),
+
+    const SizedBox(width: 15),
+
+    // Detail Status + Button Detail
+    Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildDetailRow("Nomor Polisi:", data.nomorPolisi, textColor),
+          _buildDetailRow("Nama Penyewa:", data.namaPenyewa, textColor),
+          _buildDetailRow("Status:", data.isAvailable ? "Tersedia" : "Dipinjam", textColor),
+
+          const SizedBox(height: 10),
+
+          // ================= BUTTON DETAIL ORANYE =================
+          Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CarDetailPage(data: data),
                 ),
-              ),
-              const SizedBox(width: 15),
-              // Detail Status
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildDetailRow("Nomor Polisi:", data.nomorPolisi, textColor),
-                    _buildDetailRow("Nama Penyewa:", data.namaPenyewa, textColor),
-                    _buildDetailRow("Status:", data.isAvailable ? "Tersedia" : "Dipinjam", textColor),
-                  ],
+              );
+
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Color(0xFFFF8A50), // WARNA ORANYE
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              ),
-              // Indikator Status (Lingkaran Kuning Kecil)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Colors.yellow,
-                    shape: BoxShape.circle,
+                child: const Text(
+                  "Detail",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ],
+            ),
           ),
+        ],
+      ),
+    ),
+
+    // Indikator Status Kuning
+    Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Container(
+        width: 8,
+        height: 8,
+        decoration: const BoxDecoration(
+          color: Colors.yellow,
+          shape: BoxShape.circle,
+        ),
+      ),
+    ),
+  ],
+)
+
         ],
       ),
     );

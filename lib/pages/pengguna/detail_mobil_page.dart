@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_rental_mobil/pages/pengguna/form_pemesanan.dart';
 
 // Definisi Warna untuk tema
 const Color primaryColor = Color(0xFF5A7E8C);     // Biru Header
@@ -75,7 +76,7 @@ class CarDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(231, 238, 243, 1),  // Background utama
       appBar: AppBar(
-        backgroundColor: primaryColor, // Tetap biru
+        backgroundColor: const Color.fromRGBO(90, 126, 140, 1), // Tetap biru
         elevation: 0,
         title: const Text(
           'Detail Mobil',
@@ -105,6 +106,38 @@ class CarDetailPage extends StatelessWidget {
           ],
         ),
       ),
+
+      bottomNavigationBar: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SizedBox(
+        width: double.infinity,
+        height: 50,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FormPemesanan(),
+          ),
+        );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: const Text(
+            "Pesan",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    ),
     );
   }
 
